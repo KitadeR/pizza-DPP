@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ピザDPP メニュー</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f8f8f8;
+        }
+        .menu-item {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-name {
+            font-weight: bold;
+        }
+        .item-price {
+            color: #e44d26;
+        }
+        .payment-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0f7fa;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .payment-label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ピザDPP メニュー</h1>
+    <ul style="padding:0;list-style:none;">
+        <li class="menu-item">
+            <span class="item-name">マルゲリータ</span>
+            <span class="item-price">150円</span>
+        </li>
+        <li class="menu-item">
+            <span class="item-name">四種のチーズ</span>
+            <span class="item-price">150円</span>
+        </li>
+        <li class="menu-item">
+            <span class="item-name">テリヤキ</span>
+            <span class="item-price">150円</span>
+        </li>
+    </ul>
+    <div class="payment-info">
+        <span class="payment-label">支払い方法:</span>
+        <span>au pay のみ</span>
+    </div>
+</body>
+</html>
