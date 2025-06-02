@@ -38,27 +38,104 @@
             font-weight: bold;
             margin-right: 5px;
         }
+        /* ピザ絵文字アニメーション用 */
+        .pizza-emoji {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            font-size: 4rem; /* 絵文字を大きく */
+            pointer-events: none;
+            opacity: 0.95;
+            z-index: 1000;
+            transition: transform 2.2s cubic-bezier(.2,1.2,.4,1), opacity 0.8s;
+        }
+        .hidden {
+            display: none;
+        }
+        #menu-content {
+            opacity: 0;
+            transition: opacity 0.7s;
+        }
+        #menu-content.visible {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
-    <h1>ピザDPP メニュー</h1>
-    <ul style="padding:0;list-style:none;">
-        <li class="menu-item">
-            <span class="item-name">マルゲリータ</span>
-            <span class="item-price">150円</span>
-        </li>
-        <li class="menu-item">
-            <span class="item-name">四種のチーズ</span>
-            <span class="item-price">150円</span>
-        </li>
-        <li class="menu-item">
-            <span class="item-name">テリヤキ</span>
-            <span class="item-price">150円</span>
-        </li>
-    </ul>
-    <div class="payment-info">
-        <span class="payment-label">支払い方法:</span>
-        <img src="aupay.jpeg" alt="au PAY" style="height:32px;vertical-align:middle;">
+    <div id="pizza-emoji-container"></div>
+    <div id="menu-content" class="hidden">
+        <h1>ピザDPP メニュー</h1>
+        <ul style="padding:0;list-style:none;">
+            <li class="menu-item">
+                <span class="item-name">マルゲリータ</span>
+                <span class="item-price">150円</span>
+            </li>
+            <li class="menu-item">
+                <span class="item-name">四種のチーズ</span>
+                <span class="item-price">150円</span>
+            </li>
+            <li class="menu-item">
+                <span class="item-name">テリヤキ</span>
+                <span class="item-price">150円</span>
+            </li>
+        </ul>
+        <div class="payment-info">
+            <span class="payment-label">支払い方法:</span>
+            <img src="aupay.jpeg" alt="au PAY" style="height:32px;vertical-align:middle;">
+        </div>
     </div>
+    <script>
+        // ピザ絵文字を大量に生成してアニメーション
+        const pizzaCount = 400; // ←さらに大量に！
+        const container = document.getElementById('pizza-emoji-container');
+        const emojis = [];
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
+        // ピザを上部ランダム位置に生成し、下に落とす
+        for (let i = 0; i < pizzaCount; i++) {
+            const span = document.createElement('span');
+            span.textContent = '🍕';
+            span.className = 'pizza-emoji';
+            // 横位置は画面幅ランダム、縦位置は画面上部（-80pxで画面外からスタート）
+            const left = Math.random() * w;
+            span.style.left = `${left}px`;
+            span.style.top = `-80px`;
+            span.style.opacity = '0';
+            // 少し小さめ＆ランダム回転
+            span.style.transform = `translate(-50%, 0) scale(${0.8 + Math.random() * 0.6}) rotate(${Math.random() * 360}deg)`;
+            container.appendChild(span);
+            emojis.push(span);
+        }
+
+        // すぐに落下アニメーション
+        setTimeout(() => {
+            emojis.forEach((span, i) => {
+                setTimeout(() => {
+                    // 落下先は画面下＋余白で完全に見えなく
+                    const fallY = h + 120 + Math.random() * 100;
+                    const drift = (Math.random() - 0.5) * 120;
+                    const rotate = Math.random() * 1440 - 720;
+                    span.style.opacity = '0.95';
+                    span.style.transform = `translate(calc(-50% + ${drift}px), ${fallY}px) scale(${0.8 + Math.random() * 0.6}) rotate(${rotate}deg)`;
+                    // 完全に落ちきってから消す
+                    setTimeout(() => {
+                        span.style.opacity = '0';
+                        setTimeout(() => {
+                            if (span.parentNode) span.parentNode.removeChild(span);
+                        }, 800);
+                    }, 2200); // ← 1800→2200msにして落下時間と合わせる
+                }, i * 2);
+            });
+        }, 50);
+
+        // アニメーション後にメニュー表示
+        setTimeout(() => {
+            container.innerHTML = '';
+            const menu = document.getElementById('menu-content');
+            menu.classList.remove('hidden');
+            setTimeout(() => menu.classList.add('visible'), 50);
+        }, 2600); // ← 1400→2600msにしてピザが落ちきってから表示
+    </script>
 </body>
 </html>
