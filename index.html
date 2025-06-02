@@ -47,7 +47,7 @@
             pointer-events: none;
             opacity: 0.95;
             z-index: 1000;
-            transition: transform 2.2s cubic-bezier(.2,1.2,.4,1), opacity 0.8s;
+            transition: transform 4s cubic-bezier(.2,1.2,.4,1), opacity 1.2s; /* ←ここを変更 */
         }
         .hidden {
             display: none;
@@ -123,8 +123,8 @@
                         span.style.opacity = '0';
                         setTimeout(() => {
                             if (span.parentNode) span.parentNode.removeChild(span);
-                        }, 800);
-                    }, 2200); // ← 1800→2200msにして落下時間と合わせる
+                        }, 1200); // ← 800→1200ms
+                    }, 4000); // ← 2200→4000ms
                 }, i * 2);
             });
         }, 50);
@@ -135,7 +135,7 @@
             const menu = document.getElementById('menu-content');
             menu.classList.remove('hidden');
             setTimeout(() => menu.classList.add('visible'), 50);
-        }, 2600); // ← 1400→2600msにしてピザが落ちきってから表示
+        }, 2350); // ← ここを4800から3200に
     </script>
 </body>
 </html>
