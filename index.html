@@ -92,7 +92,7 @@
         const w = window.innerWidth;
         const h = window.innerHeight;
         // 追加: 使用する絵文字リスト
-        const emojiList = ['🍕', '🍅', '🧀'];
+        const emojiList = ['🍕'];
 
         // ピザを上部ランダム位置に生成し、下に落とす
         for (let i = 0; i < pizzaCount; i++) {
@@ -111,7 +111,7 @@
             if (emoji === '🍕') {
                 scale = 1.2 + Math.random() * 0.8; // 1.2〜2.0 に拡大
             } else {
-                scale = 0.45 + Math.random() * 0.25; // 0.45〜0.7
+                scale = 0.45 + Math.random() * 0.25; // ←この分岐は不要だがそのままでも動作します
             }
             // 少し小さめ＆ランダム回転
             span.style.transform = `translate(-50%, 0) scale(${scale}) rotate(${Math.random() * 360}deg)`;
@@ -130,7 +130,7 @@
                     // ピザはさらに大きめ、トマトとチーズは小さめ
                     let scale;
                     if (span.textContent === '🍕') {
-                        scale = 1.2 + Math.random() * 0.8; // 1.2〜2.0 に拡大
+                        scale = 1.2 + Math.random() * 0.8;
                     } else {
                         scale = 0.45 + Math.random() * 0.25;
                     }
