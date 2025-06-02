@@ -91,19 +91,30 @@
         const emojis = [];
         const w = window.innerWidth;
         const h = window.innerHeight;
+        // 追加: 使用する絵文字リスト
+        const emojiList = ['🍕', '🍅', '🧀'];
 
         // ピザを上部ランダム位置に生成し、下に落とす
         for (let i = 0; i < pizzaCount; i++) {
             const span = document.createElement('span');
-            span.textContent = '🍕';
+            // ランダムで絵文字を選ぶ
+            const emoji = emojiList[Math.floor(Math.random() * emojiList.length)];
+            span.textContent = emoji;
             span.className = 'pizza-emoji';
             // 横位置は画面幅ランダム、縦位置は画面上部（-80pxで画面外からスタート）
             const left = Math.random() * w;
             span.style.left = `${left}px`;
             span.style.top = `-80px`;
             span.style.opacity = '0';
+            // ピザはさらに大きめ、トマトとチーズは小さめ
+            let scale;
+            if (emoji === '🍕') {
+                scale = 1.2 + Math.random() * 0.8; // 1.2〜2.0 に拡大
+            } else {
+                scale = 0.45 + Math.random() * 0.25; // 0.45〜0.7
+            }
             // 少し小さめ＆ランダム回転
-            span.style.transform = `translate(-50%, 0) scale(${0.8 + Math.random() * 0.6}) rotate(${Math.random() * 360}deg)`;
+            span.style.transform = `translate(-50%, 0) scale(${scale}) rotate(${Math.random() * 360}deg)`;
             container.appendChild(span);
             emojis.push(span);
         }
@@ -116,15 +127,22 @@
                     const fallY = h + 120 + Math.random() * 100;
                     const drift = (Math.random() - 0.5) * 120;
                     const rotate = Math.random() * 1440 - 720;
+                    // ピザはさらに大きめ、トマトとチーズは小さめ
+                    let scale;
+                    if (span.textContent === '🍕') {
+                        scale = 1.2 + Math.random() * 0.8; // 1.2〜2.0 に拡大
+                    } else {
+                        scale = 0.45 + Math.random() * 0.25;
+                    }
                     span.style.opacity = '0.95';
-                    span.style.transform = `translate(calc(-50% + ${drift}px), ${fallY}px) scale(${0.8 + Math.random() * 0.6}) rotate(${rotate}deg)`;
+                    span.style.transform = `translate(calc(-50% + ${drift}px), ${fallY}px) scale(${scale}) rotate(${rotate}deg)`;
                     // 完全に落ちきってから消す
                     setTimeout(() => {
                         span.style.opacity = '0';
                         setTimeout(() => {
                             if (span.parentNode) span.parentNode.removeChild(span);
-                        }, 1200); // ← 800→1200ms
-                    }, 4000); // ← 2200→4000ms
+                        }, 1200);
+                    }, 4000);
                 }, i * 2);
             });
         }, 50);
